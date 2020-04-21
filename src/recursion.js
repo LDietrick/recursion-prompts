@@ -103,6 +103,17 @@ var range = function(x, y) {
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+  if (exp === 0) {
+    return 1;
+  } else if (exp === 1) {
+    return base;
+  } else if (exp < 0) {
+    return 1 / exponent(base, exp * -1);
+  } else if (exp % 2 === 0) {
+    return (exponent(base, exp / 2) ** 2);
+  } else {
+    return base * exponent(base, exp - 1);
+  }
 };
 
 // 8. Determine if a number is a power of two.
@@ -110,14 +121,42 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+  if (n === 1) {
+    return true;
+  } else if (n === 2) {
+    return true;
+  } else if (n < 2) {
+    return false;
+  } else {
+    return powerOfTwo(n / 2);
+  }
 };
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
+  // reverse of one-character string is string
+  if (string.length === 1) {
+    return string;
+  } else {
+  // return last character + reverse of first to second-to-last
+  return string[string.length - 1] + reverse(string.substring(0, string.length - 1));
+  }
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  // ignore capitalization and spaces
+  var formattedString = string.toLowerCase().split(' ').join('');
+  // if one char, true
+  if (formattedString.length === 1) {
+    return true;
+  // if two or three chars, true if first === last
+  } else if (formattedString.length === 2 || formattedString.length === 3) {
+    return formattedString[0] === formattedString[formattedString.length - 1];
+  // if more than three chars, true if first === last and if inner chars are a palindrome
+  } else {
+    return (formattedString[0] === formattedString[formattedString.length - 1] && palindrome(formattedString.substring(1, formattedString.length - 1)));
+  }
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
