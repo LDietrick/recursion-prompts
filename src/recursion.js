@@ -49,17 +49,52 @@ var arraySum = function(array) {
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+  if (n === 0) {
+    return true;
+  } else if (n === 1) {
+    return false;
+  } else if (n > 1) {
+    return !isEven(n-1);
+  } else if (n < 0) {
+    return !isEven(n+1);
+  }
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+  if (n === 0 || n === 1 || n === -1) {
+    return 0;
+  } else if (n > 1) {
+    return n - 1 + sumBelow(n - 1);
+  } else if (n < -1) {
+    return n + 1 + sumBelow(n + 1);
+  }
 };
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
+  // base case(s): if x === y or if x and y are within 1 of each other, return empty array
+  // ...if y = x + 2, return array with one element: x + 1
+  // ...if y = x + 3, return array with x + 2 concatted with array for x + 1;
+  var inRange = [];
+  if (Math.abs(x - y) <= 1) {
+    return inRange;
+  } else if (Math.abs(x - y) === 2) {
+    if (x > y) {
+      return inRange.concat([y + 1]);
+    } else {
+      return inRange.concat([x + 1]);
+    }
+  } else if (Math.abs(x - y) > 2) {
+    if (x > y) {
+      return [x - 1].concat(range(x - 1, y));
+    } else {
+      return range(x, y - 1).concat([y - 1]);
+    }
+  }
 };
 
 // 7. Compute the exponent of a number.
